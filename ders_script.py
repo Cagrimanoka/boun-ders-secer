@@ -106,6 +106,10 @@ try:
     c7_sec = "/html/body/form/div/center/form/center[1]/table/tbody/tr[9]/td[3]/select"
     c7_rpt = "/html/body/form/div/center/form/center[1]/table/tbody/tr[9]/td[5]/select"
 
+    paths = ((c1_abb, c1_code, c1_sec, c1_rpt), (c2_abb, c2_code, c2_sec, c2_rpt), (c3_abb, c3_code, c3_sec, c3_rpt),
+             (c4_abb, c4_code, c4_sec, c4_rpt), (c5_abb, c5_code, c5_sec, c5_rpt), (c6_abb, c6_code, c6_sec, c6_rpt),
+             (c7_abb, c7_code, c7_sec, c7_rpt))
+
 
     #############################
 
@@ -143,68 +147,16 @@ try:
     if driver.current_url != "https://registration.boun.edu.tr/buis/manage/ObikasASPFrame.aspx?url=/scripts/loginst.asp":
         print("Ders seçimi sayfasında olmayabilirsin.")
 
-    if course1["active"]:
-        driver.find_element(by=By.XPATH, value=c1_abb).send_keys(course1["abb"])
-        driver.find_element(by=By.XPATH, value=c1_code).send_keys(course1["code"])
-        c1_dropdown = Select(driver.find_element(by=By.XPATH, value=c1_sec))
-        c1_dropdown.select_by_value(course1["sec"])
-        if course1["rpt"]:
-            c1r_dropdown = Select(driver.find_element(by=By.XPATH, value=c1_rpt))
-            c1r_dropdown.select_by_visible_text(rpt_check(course1["abb"], course1["code"], course1["rpt_w"]))
 
-    if course2["active"]:
-        driver.find_element(by=By.XPATH, value=c2_abb).send_keys(course2["abb"])
-        driver.find_element(by=By.XPATH, value=c2_code).send_keys(course2["code"])
-        c2_dropdown = Select(driver.find_element(by=By.XPATH, value=c2_sec))
-        c2_dropdown.select_by_value(course2["sec"])
-        if course2["rpt"]:
-            c2r_dropdown = Select(driver.find_element(by=By.XPATH, value=c2_rpt))
-            c2r_dropdown.select_by_visible_text(rpt_check(course2["abb"], course2["code"], course2["rpt_w"]))
-
-    if course3["active"]:
-        driver.find_element(by=By.XPATH, value=c3_abb).send_keys(course3["abb"])
-        driver.find_element(by=By.XPATH, value=c3_code).send_keys(course3["code"])
-        c3_dropdown = Select(driver.find_element(by=By.XPATH, value=c3_sec))
-        c3_dropdown.select_by_value(course3["sec"])
-        if course3["rpt"]:
-            c3r_dropdown = Select(driver.find_element(by=By.XPATH, value=c3_rpt))
-            c3r_dropdown.select_by_visible_text(rpt_check(course1["abb"], course3["code"], course3["rpt_w"]))
-
-    if course4["active"]:
-        driver.find_element(by=By.XPATH, value=c4_abb).send_keys(course4["abb"])
-        driver.find_element(by=By.XPATH, value=c4_code).send_keys(course4["code"])
-        c4_dropdown = Select(driver.find_element(by=By.XPATH, value=c4_sec))
-        c4_dropdown.select_by_value(course4["sec"])
-        if course4["rpt"]:
-            c4r_dropdown = Select(driver.find_element(by=By.XPATH, value=c4_rpt))
-            c4r_dropdown.select_by_visible_text(rpt_check(course4["abb"], course4["code"], course4["rpt_w"]))
-
-    if course5["active"]:
-        driver.find_element(by=By.XPATH, value=c5_abb).send_keys(course5["abb"])
-        driver.find_element(by=By.XPATH, value=c5_code).send_keys(course5["code"])
-        c5_dropdown = Select(driver.find_element(by=By.XPATH, value=c5_sec))
-        c5_dropdown.select_by_value(course5["sec"])
-        if course5["rpt"]:
-            c5r_dropdown = Select(driver.find_element(by=By.XPATH, value=c5_rpt))
-            c5r_dropdown.select_by_visible_text(rpt_check(course5["abb"], course5["code"], course5["rpt_w"]))
-
-    if course6["active"]:
-        driver.find_element(by=By.XPATH, value=c6_abb).send_keys(course6["abb"])
-        driver.find_element(by=By.XPATH, value=c6_code).send_keys(course6["code"])
-        c6_dropdown = Select(driver.find_element(by=By.XPATH, value=c6_sec))
-        c6_dropdown.select_by_value(course6["sec"])
-        if course6["rpt"]:
-            c6r_dropdown = Select(driver.find_element(by=By.XPATH, value=c6_rpt))
-            c6r_dropdown.select_by_visible_text(rpt_check(course6["abb"], course6["code"], course6["rpt_w"]))
-
-    if course7["active"]:
-        driver.find_element(by=By.XPATH, value=c7_abb).send_keys(course7["abb"])
-        driver.find_element(by=By.XPATH, value=c7_code).send_keys(course7["code"])
-        c7_dropdown = Select(driver.find_element(by=By.XPATH, value=c7_sec))
-        c7_dropdown.select_by_value(course7["sec"])
-        if course7["rpt"]:
-            c7r_dropdown = Select(driver.find_element(by=By.XPATH, value=c7_rpt))
-            c7r_dropdown.select_by_visible_text(rpt_check(course7["abb"], course7["code"], course7["rpt_w"]))
+    for i in range(len(courses)):
+        if courses[i]["active"]:
+            driver.find_element(by=By.XPATH, value=paths[i][0]).send_keys(courses[i]["abb"])
+            driver.find_element(by=By.XPATH, value=paths[i][1]).send_keys(courses[i]["code"])
+            c1_dropdown = Select(driver.find_element(by=By.XPATH, value=paths[i][2]))
+            c1_dropdown.select_by_value(courses[i]["sec"])
+            if courses[i]["rpt"]:
+                c1r_dropdown = Select(driver.find_element(by=By.XPATH, value=paths[i][3]))
+                c1r_dropdown.select_by_visible_text(rpt_check(courses[i]["abb"], courses[i]["code"], courses[i]["rpt_w"]))
 
     driver.find_element(by=By.XPATH, value=add_button).click()
 
